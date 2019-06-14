@@ -1,0 +1,42 @@
+{
+    "parser": "babel-eslint",
+    "extends": "airbnb",
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ],
+    "parserOptions": {
+      "ecmaFeatures": {
+        "legacyDecorators": true,
+        "jsx": true,
+        "experimentalObjectRestSpread": true
+      }
+    },
+    "rules": {
+      "prefer-promise-reject-errors": ["error", { "allowEmptyReject": true }],
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "react/destructuring-assignment": 1,
+      "no-underscore-dangle": ["warn", { "allow": ["_id"] }],
+      "import/prefer-default-export": 0,
+      "no-console": 1,
+      "semi": 0,
+      "no-multiple-empty-lines": 0,
+      "space-in-parens": ["warn", "never"],
+      "quotes": 0,
+      "no-tabs": 0,
+      "jsx-quotes": 0,
+      "comma-dangle": 0,
+      "indent": 0,
+      "no-unused-vars": 1,
+      "space-before-function-paren": ["warn", "never"],
+      "generator-star-spacing": 0,
+      "jsx-a11y/anchor-is-valid": 0,
+      "react/jsx-indent": 0,
+      "react/jsx-indent-props": 0,
+      "react/jsx-no-undef": 1,
+      "react/jsx-uses-react": 1,
+      "react/jsx-uses-vars": 1,
+      "react/no-multi-comp": 0
+    }
+}
