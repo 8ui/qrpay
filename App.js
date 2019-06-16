@@ -1,8 +1,15 @@
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import React, { useState } from 'react';
+// REDUX
+import { Provider } from 'react-redux'
+import configureStore from 'core/store'
+
+// PERSIST
+import { PersistGate } from 'redux-persist/integration/react'
+
 import {
-  Platform, StatusBar, View,
+  Platform, StatusBar, Text, View
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
@@ -25,6 +32,8 @@ function handleFinishLoading(setLoadingComplete) {
   setLoadingComplete(true);
 }
 
+const { store, persistor } = configureStore()
+
 export default function App({ skipLoadingScreen }) {
   const [isLoadingComplete, setLoadingComplete] = useState(false);
 
@@ -38,10 +47,16 @@ export default function App({ skipLoadingScreen }) {
     );
   }
 
+  // <PersistGate loading={null} persistor={persistor}>
+  //   <AppNavigator />
+  // </PersistGate>
+
   return (
-    <View style={{ flex: 1 }}>
+    <React.Fragment>
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-      <AppNavigator />
-    </View>
+      <Provider store={store}>
+        <AppNavigator />
+      </Provider>
+    </React.Fragment>
   );
 }

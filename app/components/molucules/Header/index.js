@@ -29,4 +29,4 @@ class Header extends React.Component {
   }
 }
 
-export default connect()(Header);
+export default Header;

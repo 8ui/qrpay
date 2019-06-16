@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = function(api) {
-  api.cache(true);
+  if (api) api.cache(true);
 
   const resolver = {
     cwd: 'babelrc',
