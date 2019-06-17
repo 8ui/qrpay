@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getFormatedSum, getOpenQR } from 'core/main'
+import { View } from 'react-native-animatable';
 import { SafeAreaView } from 'react-native'
 import { Entypo } from '@expo/vector-icons';
 import styled from 'styled-components'
@@ -10,20 +11,24 @@ import Keyboard from './Keyboard'
 import Sum from './Sum'
 
 
-const Wrapper = styled.View`
+const Wrapper = styled(View)`
   flex: 1;
 `
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
 `
 const HeaderWrapper = styled.View`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-direction: row;
   padding: 10px;
 `
 const Dropdown = styled(Entypo)`
-  color: white;
+  color: rgba(255,255,255,0.7);
   font-size: 30px;
 `
 const ResultWrapper = styled.View`
@@ -32,12 +37,30 @@ const ResultWrapper = styled.View`
   justify-content: center;
   opacity: ${props => (props.active ? 0 : 1)};
 `
+const LogoWrapper = styled(Logo)`
+  opacity: 0.7;
+  margin-left: 10px;
+`
 
 class Dashboard extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.containerRef = React.createRef();
+  }
+
+  componentWillUpdate({ openQR }) {
+    if (this.props.openQR !== openQR) {
+      const { current } = this.containerRef;
+      const fade = openQR ? 'fadeOut' : 'fadeIn'
+      if (current) current[fade](200)
+    }
+  }
+
   renderHeader = () => {
     return (
       <HeaderWrapper>
-        <Logo />
+        {/*<LogoWrapper />*/}
         <Dropdown name="dots-three-vertical" />
       </HeaderWrapper>
     )
@@ -45,9 +68,8 @@ class Dashboard extends React.Component {
 
   renderSum = () => {
     const { sum, openQR } = this.props;
-    // const
     return (
-      <ResultWrapper active={openQR}>
+      <ResultWrapper>
         <Sum sum={sum} />
       </ResultWrapper>
     )
@@ -55,7 +77,7 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <Wrapper>
+      <Wrapper ref={this.containerRef}>
         <SafeAreaViewWrapper>
           {this.renderHeader()}
           {this.renderSum()}

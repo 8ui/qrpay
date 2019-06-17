@@ -1,15 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withNavigation, StackActions } from 'react-navigation';
-import { getActive, getOpenQR, mainActions } from 'core/main'
-import { View } from 'react-native-animatable';
+import { getActive, mainActions } from 'core/main'
 import { Dimensions } from 'react-native'
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import styled from 'styled-components'
 
 const { width } = Dimensions.get('window')
 
-const Wrapper = styled(View)`
+const Wrapper = styled.View`
   align-items: center;
   opacity: ${props => (props.active ? 0 : 1)};
 `
@@ -40,22 +39,8 @@ const SubmitButton = styled.TouchableOpacity`
 `
 
 class Keyboard extends React.Component {
-  constructor(props) {
-    super(props)
-
-    this.containerRef = React.createRef();
-
-    this.state = {
-      float: false,
-    }
-  }
-
-  componentWillUpdate({ openQR }) {
-    if (this.props.openQR !== openQR) {
-      const { current } = this.containerRef;
-      const fade = openQR ? 'fadeOut' : 'fadeIn'
-      if (current) current[fade](300)
-    }
+  state = {
+    float: false,
   }
 
   onChange = (val, i) => {
@@ -101,9 +86,8 @@ class Keyboard extends React.Component {
   }
 
   render() {
-    const { openQR } = this.props
     return (
-      <Wrapper ref={this.containerRef}>
+      <Wrapper>
         <KeysWrapper>
           {Array.from(Array(9)).map((n, i) => this.renderButton(`${i + 1}`, i))}
           {this.renderButton(',', 9)}
@@ -125,7 +109,6 @@ const mapDispatchProps = dispatch => ({
 
 const mapStateToProps = state => ({
   activeButton: getActive(state),
-  openQR: getOpenQR(state),
 })
 
 export default connect(mapStateToProps, mapDispatchProps)(withNavigation(Keyboard))

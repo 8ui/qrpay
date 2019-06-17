@@ -16,9 +16,9 @@ const TextWrapper = styled.Text`
   margin-left: 3px;
 `
 
-const Logo = (props) => {
+const Logo = ({ style }) => {
   return (
-    <Wrapper>
+    <Wrapper style={style}>
       <Icon width={30} height={30} source={require('assets/logo-min.png')} />
       <TextWrapper bold>QR</TextWrapper>
       <TextWrapper>Bank</TextWrapper>

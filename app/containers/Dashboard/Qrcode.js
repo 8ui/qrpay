@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import QRCode from 'app/utils/qrcode1'
+import settings from 'app/settings'
 import { SafeAreaView } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { getFormatedSum, mainActions } from 'core/main'
-import QRCode from 'react-native-qrcode';
+// import QRCode from 'react-native-qrcode';
 import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components'
 
@@ -29,10 +31,9 @@ const CloseButton = styled.TouchableOpacity`
   opacity: ${props => (props.disabled ? 0.3 : 1)}
 `
 const Container = styled.View`
-  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.25);
   margin: 0 20px;
 `
-const QRHeader = styled.View`
+const Header = styled.View`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   background: #49C0DC;
@@ -52,39 +53,51 @@ const TextWrapper = styled.Text`
   color: rgba(86, 86, 86, 0.79);
   margin: 20px 0 30px;
 `
+const QRCodeBlank = styled.View`
+  width: ${settings.barcodeSize}px;
+  height: ${settings.barcodeSize}px;
+`
 
 class QRcode extends React.Component {
+  state = {
+    loading: true,
+  }
+
   componentWillMount() {
     const { onOpenQR } = this.props;
     onOpenQR(true)
-  }
-
-  componentWillUnmount() {
-    const { onOpenQR } = this.props;
-    onOpenQR(false)
+    setTimeout(() => this.setState({ loading: false }), 400)
   }
 
   onClose = () => {
-    const { navigation } = this.props;
+    const { navigation, onOpenQR } = this.props;
     navigation.dispatch(NavigationActions.back())
+    onOpenQR(false)
   }
 
   renderQRcode = () => {
+    const { loading } = this.state
     const { sum } = this.props;
+    let SVG;
+
+    if (!loading) {
+      SVG = QRCode({
+        content: 'http://github.com/',
+        width: settings.barcodeSize,
+        height: settings.barcodeSize,
+        color: settings.barcodeColor,
+      })
+    } else SVG = <QRCodeBlank />
+
     return (
       <Container>
-        <QRHeader>
-          <Sum scale={0.8} sum={sum} />
-        </QRHeader>
+        <Header>
+          <Sum offset={70} scale={0.8} sum={sum} />
+        </Header>
         <QRCodeWrapper>
-          <QRCode
-            value="test"
-            size={180}
-            bgColor='black'
-            fgColor='white'
-          />
+          {SVG}
           <TextWrapper>
-            Покажите этот QR-код вашему покупателю
+            Покажите QR-код вашему покупателю
           </TextWrapper>
         </QRCodeWrapper>
       </Container>
