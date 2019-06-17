@@ -1,32 +1,74 @@
 import React from 'react'
-import { LinearGradient } from 'expo-linear-gradient'
+import { connect } from 'react-redux'
+import { getFormatedSum, getOpenQR } from 'core/main'
+import { SafeAreaView } from 'react-native'
+import { Entypo } from '@expo/vector-icons';
 import styled from 'styled-components'
 
+import { Logo } from 'atoms'
 import Keyboard from './Keyboard'
-import { Header } from 'molucules'
+import Sum from './Sum'
 
-const Wrapper = styled(LinearGradient)`
+
+const Wrapper = styled.View`
   flex: 1;
 `
-const SumWrapper = styled.View`
+const SafeAreaViewWrapper = styled(SafeAreaView)`
+  flex: 1;
+`
+const HeaderWrapper = styled.View`
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  padding: 10px;
+`
+const Dropdown = styled(Entypo)`
+  color: white;
+  font-size: 30px;
+`
+const ResultWrapper = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
-`
-const TextWrapper = styled.Text`
-  color: white;
+  opacity: ${props => (props.active ? 0 : 1)};
 `
 
 class Dashboard extends React.Component {
+  renderHeader = () => {
+    return (
+      <HeaderWrapper>
+        <Logo />
+        <Dropdown name="dots-three-vertical" />
+      </HeaderWrapper>
+    )
+  }
+
+  renderSum = () => {
+    const { sum, openQR } = this.props;
+    // const
+    return (
+      <ResultWrapper active={openQR}>
+        <Sum sum={sum} />
+      </ResultWrapper>
+    )
+  }
+
   render() {
     return (
-      <Wrapper colors={['#99D815', '#49C0DC']} start={[0, 0]} end={[1, 1]}>
-        <Header />
-        <SumWrapper><TextWrapper>0,00</TextWrapper></SumWrapper>
-        <Keyboard />
+      <Wrapper>
+        <SafeAreaViewWrapper>
+          {this.renderHeader()}
+          {this.renderSum()}
+          <Keyboard />
+        </SafeAreaViewWrapper>
       </Wrapper>
     )
   }
 }
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  sum: getFormatedSum(state).split('.'),
+  openQR: getOpenQR(state),
+})
+
+export default connect(mapStateToProps)(Dashboard);

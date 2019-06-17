@@ -1,6 +1,8 @@
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
+import Constants from 'expo-constants'
 import React, { useState } from 'react';
+import { LinearGradient } from 'expo-linear-gradient'
 // REDUX
 import { Provider } from 'react-redux'
 import configureStore from 'core/store'
@@ -9,17 +11,18 @@ import configureStore from 'core/store'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import {
-  Platform, StatusBar, Text, View
+  Platform, StatusBar,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 import AppNavigator from './app/Navigator';
 
 async function loadResourcesAsync() {
   await Promise.all([
     Font.loadAsync({
-      ...Ionicons.font,
-      'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      roboto: require('./assets/fonts/Roboto-Regular.ttf'),
+      'roboto-300': require('./assets/fonts/Roboto-Light.ttf'),
+      'roboto-500': require('./assets/fonts/Roboto-Medium.ttf'),
+      'roboto-600': require('./assets/fonts/Roboto-Bold.ttf'),
     }),
   ]);
 }
@@ -52,11 +55,19 @@ export default function App({ skipLoadingScreen }) {
   // </PersistGate>
 
   return (
-    <React.Fragment>
+    <LinearGradient
+      style={{
+        flex: 1,
+        paddingTop: Constants.statusBarHeight,
+      }}
+      colors={['#99D815', '#49C0DC']}
+      start={[0, 0]}
+      end={[1, 1]}
+    >
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
       <Provider store={store}>
         <AppNavigator />
       </Provider>
-    </React.Fragment>
+    </LinearGradient>
   );
 }
