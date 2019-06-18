@@ -1,4 +1,4 @@
 export default {
-  barcodeSize: 200,
+  barcodeSize: 240,
   barcodeColor: '#000',
 }

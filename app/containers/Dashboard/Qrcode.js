@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import QRCode from 'app/utils/qrcode1'
+import QRCode from 'react-native-qrcode-svg';
 import settings from 'app/settings'
 import { SafeAreaView } from 'react-native'
 import { NavigationActions } from 'react-navigation'
@@ -60,34 +60,32 @@ const QRCodeBlank = styled.View`
 
 class QRcode extends React.Component {
   state = {
-    loading: true,
+    // loading: true,
   }
+
+  openQR = false;
 
   componentWillMount() {
     const { onOpenQR } = this.props;
-    onOpenQR(true)
-    setTimeout(() => this.setState({ loading: false }), 400)
+    this.onOpenQR(true)
+  }
+
+  onOpenQR = (action) => {
+    const { onOpenQR } = this.props;
+    if (this.openQR !== action) {
+      onOpenQR(action)
+      this.openQR = action
+    }
   }
 
   onClose = () => {
-    const { navigation, onOpenQR } = this.props;
+    const { navigation } = this.props;
     navigation.dispatch(NavigationActions.back())
-    onOpenQR(false)
+    this.onOpenQR(false)
   }
 
   renderQRcode = () => {
-    const { loading } = this.state
     const { sum } = this.props;
-    let SVG;
-
-    if (!loading) {
-      SVG = QRCode({
-        content: 'http://github.com/',
-        width: settings.barcodeSize,
-        height: settings.barcodeSize,
-        color: settings.barcodeColor,
-      })
-    } else SVG = <QRCodeBlank />
 
     return (
       <Container>
@@ -95,7 +93,16 @@ class QRcode extends React.Component {
           <Sum offset={70} scale={0.8} sum={sum} />
         </Header>
         <QRCodeWrapper>
-          {SVG}
+          <QRCode
+            logo={require('assets/logo-text.png')}
+            logoSize={[86, 20]}
+            logoMargin={4}
+            logoBorderRadius={8}
+            logoBackgroundColor="black"
+            value={String(sum)}
+            size={settings.barcodeSize}
+            color={settings.barcodeColor}
+          />
           <TextWrapper>
             Покажите QR-код вашему покупателю
           </TextWrapper>
