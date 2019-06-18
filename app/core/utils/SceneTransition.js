@@ -1,50 +1,65 @@
 import { Animated, Easing } from 'react-native';
 
-export const transitionConfig = () => ({
-  // transitionSpec: {
-  //   duration: 300,
-  //   easing: Easing.out(Easing.poly(4)),
-  //   timing: Animated.timing,
-  // },
-  containerStyle: {
-    backgroundColor: 'transparent',
-  },
-  screenInterpolator: (sceneProps) => {
-    const { position, layout, scene, index, scenes } = sceneProps
+export const transitionConfig = ({ scenes }) => {
+  const nextScene = scenes[scenes.length - 1];
+  let prop;
+  try {
+    prop = nextScene.route.params.transition
+    if (!prop) throw new Error();
+  } catch (e) {
+    prop = 'fromRight'
+    // prop = 'fromBottom'
+  }
+  const screenInterpolator = (...props) => {
+    const { position, scene, layout } = props[0]
+    const { index } = scene
+    const height = layout.initHeight;
+    const width = layout.initWidth;
+    const transform = {}
 
-    const thisSceneIndex = scene.index
-    const height = layout.initHeight
-    const width = layout.initWidth
-
-    // We can access our navigation params on the scene's 'route' property
-    var thisSceneParams = scene.route.params || {}
-
-    const translateX = position.interpolate({
-      inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
-      outputRange: [width, 0, 0]
-    })
-
-    const translateY = position.interpolate({
-      inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
-      outputRange: [height / 2, 0, 0]
-    })
+    switch (prop) {
+      case 'fromBottom':
+        transform.translateY = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [height / 2, 0, -height / 3],
+        });
+        break;
+      case 'fromRight':
+        transform.translateX = position.interpolate({
+          inputRange: [index - 1, index, index + 1],
+          outputRange: [width / 2, 0, -width / 3],
+        });
+        break
+      default:
+    }
 
     const opacity = position.interpolate({
-      inputRange: [thisSceneIndex - 1, thisSceneIndex - 0.5, thisSceneIndex],
-      outputRange: [0, 0, 1],
+      inputRange: [index - 1, index, index + 1],
+      outputRange: [0, 1, 0],
     })
 
-    const scale = position.interpolate({
-      inputRange: [thisSceneIndex - 1, thisSceneIndex, thisSceneIndex + 1],
-      outputRange: [4, 1, 1]
-    })
-
-    const slideFromRight = { transform: [{ translateX }] }
-    const scaleWithOpacity = { opacity, transform: [{ scaleX: scale }, { scaleY: scale }] }
-    const slideInFromBottom = { opacity, transform: [{ translateY }] }
-
-    if (thisSceneParams.plain) return slideFromRight
-    else if (index < 5) return slideInFromBottom
-    else return scaleWithOpacity
+    return {
+      transform: [transform],
+      opacity,
+    }
   }
-});
+
+  const transitionSpec = {
+    timing: Animated.spring,
+    stiffness: 1000,
+    damping: 500,
+    mass: 3,
+    overshootClamping: true,
+    restDisplacementThreshold: 0.01,
+    restSpeedThreshold: 0.01,
+  };
+
+  return {
+    ...transitionConfig,
+    screenInterpolator,
+    transitionSpec,
+    containerStyle: {
+      backgroundColor: 'transparent',
+    }
+  }
+};

@@ -50,11 +50,11 @@ class Dashboard extends React.Component {
   }
 
   componentWillUpdate({ openQR }) {
-    if (this.props.openQR !== openQR) {
-      const { current } = this.containerRef;
-      const fade = openQR ? 'fadeOut' : 'fadeIn'
-      if (current) current[fade](200)
-    }
+    // if (this.props.openQR !== openQR) {
+    //   const { current } = this.containerRef;
+    //   const fade = openQR ? 'fadeOut' : 'fadeIn'
+    //   if (current) current[fade](200)
+    // }
   }
 
   renderHeader = () => {

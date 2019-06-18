@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import QRCode from 'react-native-qrcode-svg';
 import settings from 'app/settings'
-import { SafeAreaView } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { getFormatedSum, mainActions } from 'core/main'
 // import QRCode from 'react-native-qrcode';
@@ -12,10 +11,9 @@ import styled from 'styled-components'
 import Sum from './Sum'
 
 
-const Wrapper = styled(SafeAreaView)`
+const Wrapper = styled.View`
   flex: 1;
   justify-content: flex-end;
-  background-color: transparent;
 `
 const CloseButtonWrapper = styled.View`
   align-items: center;
@@ -39,7 +37,7 @@ const Header = styled.View`
   background: #49C0DC;
   align-items: center;
   justify-content: center;
-  padding: 5px;
+  padding: 13px 0 0;
 `
 const QRCodeWrapper = styled.View`
   background: #fff;
@@ -95,10 +93,9 @@ class QRcode extends React.Component {
         <QRCodeWrapper>
           <QRCode
             logo={require('assets/logo-text.png')}
-            logoSize={[86, 20]}
-            logoMargin={4}
-            logoBorderRadius={8}
-            logoBackgroundColor="black"
+            logoSize={[77, 22]}
+            logoMargin={0}
+            logoBackgroundColor="transparent"
             value={String(sum)}
             size={settings.barcodeSize}
             color={settings.barcodeColor}

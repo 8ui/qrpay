@@ -26,6 +26,7 @@ const Text = styled.Text`
   color: #F6F5DF;
   font-size: 48px;
   font-family: roboto-300;
+  line-height: ${props => (props.mini ? 30 : 60)}px;
 `
 const SubmitButton = styled.TouchableOpacity`
   margin: 25px 0 5px;
@@ -39,37 +40,43 @@ const SubmitButton = styled.TouchableOpacity`
 `
 
 class Keyboard extends React.Component {
-  state = {
-    float: false,
-  }
+  activeButton = false
 
   onChange = (val, i) => {
-    const { float } = this.state;
-    const { onChange } = this.props;
+    const { onChange, changeFloat } = this.props;
     switch (i) {
-      case 9:
-        this.setState({ float: !float })
+      case 9: // « , »
+        // this.setState({ float: !float })
+        changeFloat()
         break;
-      case 11:
-        this.setState({ float: false })
+      case 11: // « <- »
+        // this.setState({ float: false })
         break;
       default:
-        onChange(parseInt(val, 10), float)
+        onChange(parseInt(val, 10))
     }
   }
 
 	openQRcode = () => {
     const { navigation } = this.props;
+    if (this.activeButton) return;
+    this.activeButton = true;
     navigation.dispatch(StackActions.push({
       routeName: 'QRCodeScreen',
+      params: {
+        transition: 'fromBottom',
+      }
     }))
+    setTimeout(() => {
+      this.activeButton = false;
+    }, 400)
 	}
 
-  renderButton = (val, i) => {
+  renderButton = (val, i, mini) => {
     return (
       <Button key={`key-${i}`} onPress={() => this.onChange(val, i)}>
         {typeof val === 'string'
-          ? <Text>{val}</Text>
+          ? <Text mini={mini}>{val}</Text>
           : val
         }
       </Button>
@@ -90,7 +97,7 @@ class Keyboard extends React.Component {
       <Wrapper>
         <KeysWrapper>
           {Array.from(Array(9)).map((n, i) => this.renderButton(`${i + 1}`, i))}
-          {this.renderButton(',', 9)}
+          {this.renderButton(',', 9, true)}
           {this.renderButton('0', 10)}
           {this.renderButton(
             <Ionicons name="ios-backspace" color="white" size={48} />, 11
@@ -105,6 +112,7 @@ class Keyboard extends React.Component {
 const mapDispatchProps = dispatch => ({
   dispatch,
   onChange: (...props) => dispatch(mainActions.changeSum(...props)),
+  changeFloat: (...props) => dispatch(mainActions.changeFloat(...props)),
 })
 
 const mapStateToProps = state => ({
