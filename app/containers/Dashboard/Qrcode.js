@@ -17,7 +17,7 @@ const Wrapper = styled.View`
 `
 const CloseButtonWrapper = styled.View`
   align-items: center;
-  margin-top: 40px;
+  margin-top: 10px;
 `
 const CloseButton = styled.TouchableOpacity`
   margin: 25px 0 5px;

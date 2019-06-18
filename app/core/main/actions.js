@@ -2,6 +2,7 @@ export const mainActions = {
   MAIN_CHANGE_SUM: 'MAIN_CHANGE_SUM',
   MAIN_OPEN_QR: 'MAIN_OPEN_QR',
   MAIN_CHANGE_FLOAT: 'MAIN_CHANGE_FLOAT',
+  MAIN_BACKSPACE: 'MAIN_BACKSPACE',
 
   changeSum: payload => ({
     type: mainActions.MAIN_CHANGE_SUM,
@@ -15,5 +16,9 @@ export const mainActions = {
 
   changeFloat: () => ({
     type: mainActions.MAIN_CHANGE_FLOAT,
+  }),
+
+  backspace: () => ({
+    type: mainActions.MAIN_BACKSPACE,
   }),
 };

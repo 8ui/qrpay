@@ -43,14 +43,13 @@ class Keyboard extends React.Component {
   activeButton = false
 
   onChange = (val, i) => {
-    const { onChange, changeFloat } = this.props;
+    const { onChange, changeFloat, backspace } = this.props;
     switch (i) {
       case 9: // « , »
-        // this.setState({ float: !float })
         changeFloat()
         break;
       case 11: // « <- »
-        // this.setState({ float: false })
+        backspace();
         break;
       default:
         onChange(parseInt(val, 10))
@@ -113,6 +112,7 @@ const mapDispatchProps = dispatch => ({
   dispatch,
   onChange: (...props) => dispatch(mainActions.changeSum(...props)),
   changeFloat: (...props) => dispatch(mainActions.changeFloat(...props)),
+  backspace: () => dispatch(mainActions.backspace()),
 })
 
 const mapStateToProps = state => ({

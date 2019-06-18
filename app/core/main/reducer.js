@@ -23,6 +23,11 @@ export function mainReducer(state = initialState, action) {
       return { ...state, openQR: action.payload };
     case type.MAIN_CHANGE_FLOAT:
       return { ...state, float: !state.float };
+    case type.MAIN_BACKSPACE: {
+      const sum = state.sum.toString().slice(0, -1).replace(/\.$/, '') || 0
+      if (sum === 0) state.float = false
+      return { ...state, sum: parseFloat(sum) };
+    }
     default:
       return state;
   }
