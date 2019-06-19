@@ -3,10 +3,10 @@ import { connect } from 'react-redux'
 import { getFormatedSum, getOpenQR } from 'core/main'
 import { View } from 'react-native-animatable';
 import { SafeAreaView } from 'react-native'
-import { Entypo } from '@expo/vector-icons';
 import styled from 'styled-components'
 
-import { Logo } from 'atoms'
+// import { Logo } from 'atoms'
+import { Dropdown } from 'molucules'
 import Keyboard from './Keyboard'
 import Sum from './Sum'
 
@@ -22,14 +22,11 @@ const HeaderWrapper = styled.View`
   top: 0;
   left: 0;
   right: 0;
+  z-index: 1;
   align-items: center;
   justify-content: flex-end;
   flex-direction: row;
   padding: 10px;
-`
-const Dropdown = styled(Entypo)`
-  color: rgba(255,255,255,0.7);
-  font-size: 30px;
 `
 const ResultWrapper = styled.View`
   flex: 1;
@@ -37,10 +34,10 @@ const ResultWrapper = styled.View`
   justify-content: center;
   opacity: ${props => (props.active ? 0 : 1)};
 `
-const LogoWrapper = styled(Logo)`
-  opacity: 0.7;
-  margin-left: 10px;
-`
+// const LogoWrapper = styled(Logo)`
+//   opacity: 0.7;
+//   margin-left: 10px;
+// `
 
 class Dashboard extends React.Component {
   constructor(props) {
@@ -60,8 +57,8 @@ class Dashboard extends React.Component {
   renderHeader = () => {
     return (
       <HeaderWrapper>
-        {/*<LogoWrapper />*/}
-        <Dropdown name="dots-three-vertical" />
+        {/* <LogoWrapper /> */}
+        <Dropdown icon="dots-three-vertical" />
       </HeaderWrapper>
     )
   }
