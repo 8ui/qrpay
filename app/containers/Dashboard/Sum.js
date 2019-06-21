@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { px } from 'core/utils'
 import { getMain } from 'core/main'
 import { Dimensions } from 'react-native'
 import { Text } from 'react-native-animatable';
@@ -22,21 +23,21 @@ const left = (props) => {
 }
 
 const Wrapper = styled.View`
-  margin-top: ${props => (props.attach ? 10 : 0)}px;
+  margin-top: ${props => px(props.attach ? 10 : 0)};
   transform: scale(${props => props.scale});
 `
 const CurrencyWrapper = styled(Text)`
   position: absolute;
   color: white;
-  font-size: 28px;
+  font-size: ${px(28)};
   font-family: roboto-300;
-  line-height: 33px;
-  margin: 0 4px;
-  left: -${CURR_WIDTH}px;
+  line-height: ${px(33)};
+  margin: ${px(0, 4)};
+  left: ${px(-CURR_WIDTH)};
   ${props => (props.attach
     ? `
-      top: -30px;
-      left: ${left(props)}px;
+      top: ${px(-30)};
+      left: ${px(left(props))};
     `
     : '')
   }
@@ -46,16 +47,16 @@ const SumWrapper = styled.View`
 `
 const IntWrapper = styled(Text)`
   color: white;
-  font-size: ${props => 64 * transform(props)}px;
+  font-size: ${props => px(64 * transform(props))};
   font-family: roboto-500;
-  line-height: ${props => 66 * transform(props)}px;
-  margin: 0 4px;
+  line-height: ${props => px(66 * transform(props))};
+  margin: ${px(0, 4)};
 `
 const FloatWrapper = styled(Text)`
   color: white;
-  font-size: ${props => 28 * transform(props)}px;
+  font-size: ${props => px(28 * transform(props))};
   font-family: roboto-300;
-  line-height: ${props => 33 * transform(props)}px;
+  line-height: ${props => px(33 * transform(props))};
   margin: 0px;
 `
 

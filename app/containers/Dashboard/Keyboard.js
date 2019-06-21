@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { px } from 'core/utils'
 import { withNavigation, StackActions } from 'react-navigation';
 import { getActive, mainActions } from 'core/main'
 import { Dimensions } from 'react-native'
@@ -20,22 +21,22 @@ const Button = styled.TouchableOpacity`
   align-items: center;
   justify-content: center;
   width: ${Math.floor(width / 3)}px;
-  height: 70px;
+  height: ${px(70)};
 `
 const Text = styled.Text`
   color: #F6F5DF;
-  font-size: 48px;
+  font-size: ${px(48)};
   font-family: roboto-300;
-  line-height: ${props => (props.mini ? 30 : 60)}px;
+  line-height: ${props => px(props.mini ? 30 : 60)};
 `
 const SubmitButton = styled.TouchableOpacity`
-  margin: 25px 0 5px;
-  width: 80px;
-  height: 80px;
-  border: 2px solid #FFFFFF;
+  margin: ${px(25, 0, 20)};
+  width: ${px(80)};
+  height: ${px(80)};
+  border: ${px(2)} solid #FFFFFF;
   align-items: center;
   justify-content: center;
-  border-radius: 40px;
+  border-radius: ${px(40)};
   opacity: ${props => (props.disabled ? 0.3 : 1)}
 `
 
@@ -86,7 +87,7 @@ class Keyboard extends React.Component {
     const { activeButton } = this.props;
     return (
       <SubmitButton onPress={this.openQRcode} disabled={activeButton}>
-        <FontAwesome name="qrcode" size={48} color="white" />
+        <FontAwesome name="qrcode" size={px(48).int} color="white" />
       </SubmitButton>
     )
   }

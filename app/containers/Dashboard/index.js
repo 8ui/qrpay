@@ -1,32 +1,25 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getFormatedSum, getOpenQR } from 'core/main'
-import { View } from 'react-native-animatable';
 import { SafeAreaView } from 'react-native'
 import styled from 'styled-components'
+import { WhitePortal } from 'react-native-portal';
 
 // import { Logo } from 'atoms'
-import { Dropdown } from 'molucules'
+import { Dropdown, Header } from 'molucules'
 import Keyboard from './Keyboard'
 import Sum from './Sum'
 
 
-const Wrapper = styled(View)`
+const Wrapper = styled(SafeAreaView)`
   flex: 1;
 `
-const SafeAreaViewWrapper = styled(SafeAreaView)`
-  flex: 1;
-`
-const HeaderWrapper = styled.View`
+const HeaderWrapper = styled(Header)`
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1;
-  align-items: center;
-  justify-content: flex-end;
-  flex-direction: row;
-  padding: 10px;
 `
 const ResultWrapper = styled.View`
   flex: 1;
@@ -40,31 +33,17 @@ const ResultWrapper = styled.View`
 // `
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.containerRef = React.createRef();
-  }
-
-  componentWillUpdate({ openQR }) {
-    // if (this.props.openQR !== openQR) {
-    //   const { current } = this.containerRef;
-    //   const fade = openQR ? 'fadeOut' : 'fadeIn'
-    //   if (current) current[fade](200)
-    // }
-  }
-
   renderHeader = () => {
     return (
-      <HeaderWrapper>
-        {/* <LogoWrapper /> */}
-        <Dropdown icon="dots-three-vertical" />
-      </HeaderWrapper>
+      <HeaderWrapper
+        back={false}
+        renderRight={() => <Dropdown icon="dots-three-vertical" />}
+      />
     )
   }
 
   renderSum = () => {
-    const { sum, openQR } = this.props;
+    const { sum } = this.props;
     return (
       <ResultWrapper>
         <Sum sum={sum} />
@@ -74,12 +53,11 @@ class Dashboard extends React.Component {
 
   render() {
     return (
-      <Wrapper ref={this.containerRef}>
-        <SafeAreaViewWrapper>
-          {this.renderHeader()}
-          {this.renderSum()}
-          <Keyboard />
-        </SafeAreaViewWrapper>
+      <Wrapper>
+        <WhitePortal name="dashboard" />
+        {this.renderHeader()}
+        {this.renderSum()}
+        <Keyboard />
       </Wrapper>
     )
   }

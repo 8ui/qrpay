@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "qrpay",
-    "slug": "qrpay-mobile",
+    "name": "qrpass",
+    "slug": "qrpass",
     "privacy": "public",
     "sdkVersion": "33.0.0",
     "platforms": [
@@ -25,6 +25,7 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "description": ""
   }
 }

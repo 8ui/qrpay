@@ -1,4 +1,6 @@
+import { px } from 'core/utils'
+
 export default {
-  barcodeSize: 240,
+  barcodeSize: px(300).int,
   barcodeColor: '#000',
 }

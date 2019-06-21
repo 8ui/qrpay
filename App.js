@@ -2,6 +2,7 @@ import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
 import Constants from 'expo-constants'
 import React, { useState } from 'react';
+import { PortalProvider } from 'react-native-portal'
 import { LinearGradient } from 'expo-linear-gradient'
 // REDUX
 import { Provider } from 'react-redux'
@@ -66,7 +67,9 @@ export default function App({ skipLoadingScreen }) {
     >
       {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
       <Provider store={store}>
-        <AppNavigator />
+        <PortalProvider>
+          <AppNavigator />
+        </PortalProvider>
       </Provider>
     </LinearGradient>
   );

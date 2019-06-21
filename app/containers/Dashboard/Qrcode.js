@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { px } from 'core/utils'
 import QRCode from 'react-native-qrcode-svg';
 import settings from 'app/settings'
 import { NavigationActions } from 'react-navigation'
@@ -15,45 +16,39 @@ const Wrapper = styled.View`
   flex: 1;
   justify-content: flex-end;
 `
-const CloseButtonWrapper = styled.View`
-  align-items: center;
-  margin-top: 10px;
-`
-const CloseButton = styled.TouchableOpacity`
-  margin: 25px 0 5px;
-  width: 80px;
-  height: 80px;
-  align-items: center;
-  justify-content: center;
-  border-radius: 40px;
-  opacity: ${props => (props.disabled ? 0.3 : 1)}
-`
 const Container = styled.View`
-  margin: 0 20px;
+  margin: ${px(0, 20)};
 `
 const Header = styled.View`
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: ${px(10)};
+  border-top-right-radius: ${px(10)};
   background: #49C0DC;
   align-items: center;
   justify-content: center;
-  padding: 13px 0 0;
+  padding: ${px(13, 0, 0)};
 `
 const QRCodeWrapper = styled.View`
   background: #fff;
-  padding: 40px 0 0;
+  padding: ${px(40, 0, 0)};
   align-items: center;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: ${px(10)};
+  border-bottom-right-radius: ${px(10)};
 `
 const TextWrapper = styled.Text`
-  font-size: 13px;
+  font-size: ${px(13)};
   color: rgba(86, 86, 86, 0.79);
-  margin: 20px 0 30px;
+  margin: ${px(20, 0, 30)};
 `
-const QRCodeBlank = styled.View`
-  width: ${settings.barcodeSize}px;
-  height: ${settings.barcodeSize}px;
+const CloseButtonWrapper = styled.View`
+  align-items: center;
+`
+const CloseButton = styled.TouchableOpacity`
+  margin: ${px(25, 0, 20)}
+  width: ${px(80)};
+  height: ${px(80)};
+  align-items: center;
+  justify-content: center;
+  border-radius: ${px(40)};
 `
 
 class QRcode extends React.Component {
@@ -93,7 +88,7 @@ class QRcode extends React.Component {
         <QRCodeWrapper>
           <QRCode
             logo={require('assets/logo-text.png')}
-            logoSize={[77, 22]}
+            logoSize={[px(77).int, px(22).int]}
             logoMargin={0}
             logoBackgroundColor="transparent"
             value={String(sum)}
@@ -112,7 +107,7 @@ class QRcode extends React.Component {
     return (
       <CloseButtonWrapper>
         <CloseButton onPress={this.onClose}>
-          <Ionicons name="ios-close" size={74} color="white" />
+          <Ionicons name="ios-close" size={px(74).int} color="white" />
         </CloseButton>
       </CloseButtonWrapper>
     )
