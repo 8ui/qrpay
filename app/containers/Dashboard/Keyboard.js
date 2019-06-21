@@ -1,13 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { px } from 'core/utils'
+import settings from 'app/settings'
 import { withNavigation, StackActions } from 'react-navigation';
 import { getActive, mainActions } from 'core/main'
 import { Dimensions } from 'react-native'
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import styled from 'styled-components'
-
-const { width } = Dimensions.get('window')
+const window = Dimensions.get('window')
+// const { width } = Dimensions.get('window')
+const width = window.width > settings.keyboardMaxWidth ? settings.keyboardMaxWidth : window.width
+console.log(settings, width);
 
 const Wrapper = styled.View`
   align-items: center;
@@ -16,6 +19,7 @@ const Wrapper = styled.View`
 const KeysWrapper = styled.View`
   flex-direction: row;
   flex-wrap: wrap;
+  max-width: ${Math.ceil(width)}px;
 `
 const Button = styled.TouchableOpacity`
   align-items: center;

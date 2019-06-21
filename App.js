@@ -65,7 +65,7 @@ export default function App({ skipLoadingScreen }) {
       start={[0, 0]}
       end={[1, 1]}
     >
-      {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+      <StatusBar animated barStyle="light-content" />
       <Provider store={store}>
         <PortalProvider>
           <AppNavigator />

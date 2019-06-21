@@ -1,6 +1,7 @@
 import { px } from 'core/utils'
 
 export default {
-  barcodeSize: px(300).int,
+  keyboardMaxWidth: 500,
+  barcodeSize: px(300).max(420),
   barcodeColor: '#000',
 }

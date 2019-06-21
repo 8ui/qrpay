@@ -5,7 +5,6 @@ import QRCode from 'react-native-qrcode-svg';
 import settings from 'app/settings'
 import { NavigationActions } from 'react-navigation'
 import { getFormatedSum, mainActions } from 'core/main'
-// import QRCode from 'react-native-qrcode';
 import { Ionicons } from '@expo/vector-icons';
 import styled from 'styled-components'
 
@@ -15,9 +14,11 @@ import Sum from './Sum'
 const Wrapper = styled.View`
   flex: 1;
   justify-content: flex-end;
+  align-items: center;
 `
 const Container = styled.View`
   margin: ${px(0, 20)};
+  width: ${settings.barcodeSize + px(60).int}px;
 `
 const Header = styled.View`
   border-top-left-radius: ${px(10)};
@@ -27,7 +28,7 @@ const Header = styled.View`
   justify-content: center;
   padding: ${px(13, 0, 0)};
 `
-const QRCodeWrapper = styled.View`
+const Body = styled.View`
   background: #fff;
   padding: ${px(40, 0, 0)};
   align-items: center;
@@ -52,29 +53,9 @@ const CloseButton = styled.TouchableOpacity`
 `
 
 class QRcode extends React.Component {
-  state = {
-    // loading: true,
-  }
-
-  openQR = false;
-
-  componentWillMount() {
-    const { onOpenQR } = this.props;
-    this.onOpenQR(true)
-  }
-
-  onOpenQR = (action) => {
-    const { onOpenQR } = this.props;
-    if (this.openQR !== action) {
-      onOpenQR(action)
-      this.openQR = action
-    }
-  }
-
   onClose = () => {
     const { navigation } = this.props;
     navigation.dispatch(NavigationActions.back())
-    this.onOpenQR(false)
   }
 
   renderQRcode = () => {
@@ -85,10 +66,10 @@ class QRcode extends React.Component {
         <Header>
           <Sum offset={70} scale={0.8} sum={sum} />
         </Header>
-        <QRCodeWrapper>
+        <Body>
           <QRCode
             logo={require('assets/logo-text.png')}
-            logoSize={[px(77).int, px(22).int]}
+            logoSize={[77, 22]}
             logoMargin={0}
             logoBackgroundColor="transparent"
             value={String(sum)}
@@ -98,7 +79,7 @@ class QRcode extends React.Component {
           <TextWrapper>
             Покажите QR-код вашему покупателю
           </TextWrapper>
-        </QRCodeWrapper>
+        </Body>
       </Container>
     )
   }

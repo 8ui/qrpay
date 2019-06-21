@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import { getFormatedSum, getOpenQR } from 'core/main'
 import { SafeAreaView } from 'react-native'
 import styled from 'styled-components'
-import { WhitePortal } from 'react-native-portal';
 
 // import { Logo } from 'atoms'
 import { Dropdown, Header } from 'molucules'
@@ -14,18 +13,16 @@ import Sum from './Sum'
 const Wrapper = styled(SafeAreaView)`
   flex: 1;
 `
-const HeaderWrapper = styled(Header)`
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-`
 const ResultWrapper = styled.View`
   flex: 1;
   align-items: center;
   justify-content: center;
   opacity: ${props => (props.active ? 0 : 1)};
+`
+const DropdownWrapper = styled(Dropdown)`
+  position: absolute;
+  top: 0;
+  right: 0;
 `
 // const LogoWrapper = styled(Logo)`
 //   opacity: 0.7;
@@ -33,14 +30,9 @@ const ResultWrapper = styled.View`
 // `
 
 class Dashboard extends React.Component {
-  renderHeader = () => {
-    return (
-      <HeaderWrapper
-        back={false}
-        renderRight={() => <Dropdown icon="dots-three-vertical" />}
-      />
-    )
-  }
+  renderHeader = () => (
+    <DropdownWrapper icon="dots-three-vertical" />
+  )
 
   renderSum = () => {
     const { sum } = this.props;
@@ -54,7 +46,6 @@ class Dashboard extends React.Component {
   render() {
     return (
       <Wrapper>
-        <WhitePortal name="dashboard" />
         {this.renderHeader()}
         {this.renderSum()}
         <Keyboard />

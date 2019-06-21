@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { px } from 'core/utils'
-import { SafeAreaView } from 'react-native'
+import { SafeAreaView, StatusBar } from 'react-native'
 import styled from 'styled-components'
 
 import { Input, Button } from 'atoms'
@@ -54,6 +54,7 @@ class BindTerminal extends React.Component {
   render() {
     return (
       <Wrapper>
+        <StatusBar animated barStyle="dark-content" />
         {this.renderHeader()}
         {this.renderTitle()}
         {this.renderInput()}

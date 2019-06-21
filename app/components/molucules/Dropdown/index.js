@@ -10,12 +10,15 @@ import { BlackPortal } from 'react-native-portal';
 import { Divider } from 'atoms'
 
 const { width, height } = Dimensions.get('window');
-const menuWidth = width * 0.75 < px(250).int ? width - px(20).int : width * 0.75
 
 const Wrapper = styled.View`
-
+  z-index: 4;
 `
 const ButtonWrapper = styled.TouchableOpacity`
+  width: ${px(50)};
+  height: ${px(60)};
+  align-items: center;
+  justify-content: center;
   z-index: 3;
 `
 const IconWrapper = styled(Entypo)`
@@ -27,19 +30,19 @@ const Overlay = styled.TouchableOpacity`
   position: absolute;
   top: ${px(-20)};
   right: ${px(-10)};
-  z-index: 1;
   width: ${width}px;
   height: ${height}px;
+  z-index: 1;
 `
 const Menu = styled(View)`
   opacity: 0;
   position: absolute;
-  top: ${px(-10)};
-  right: 0;
+  top: 0;
+  right: ${px(10)};
   z-index: 2;
   background-color: white;
   border-radius: ${px(5)};
-  min-width: ${menuWidth}px;
+  min-width: ${px(250)};
 `
 const MenuHeader = styled.Text`
   padding: ${px(22, 25, 15)};
@@ -68,6 +71,7 @@ class Dropdown extends React.Component {
   }
 
   onPress = (item) => {
+    console.log(item);
     const { navigation } = this.props;
     navigation.dispatch(StackActions.push({
       routeName: item.route,
@@ -119,18 +123,16 @@ class Dropdown extends React.Component {
 
   render() {
     const { open } = this.state
-    const { icon } = this.props
+    const { icon, style } = this.props
     return (
       <React.Fragment>
-        <Wrapper>
+        <Wrapper style={style}>
           <ButtonWrapper onPress={this.toggle}>
             <IconWrapper open={open} name={icon} />
           </ButtonWrapper>
-          {this.renderMenu()}
         </Wrapper>
-        <BlackPortal name="dashboard">
-          {this.renderOverlay()}
-        </BlackPortal>
+        {this.renderMenu()}
+        {this.renderOverlay()}
       </React.Fragment>
     )
   }
