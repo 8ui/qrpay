@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getFormatedSum, getOpenQR } from 'core/main'
+import { statusBar } from 'app/hoc'
 import { SafeAreaView } from 'react-native'
 import styled from 'styled-components'
 
@@ -29,6 +30,7 @@ const DropdownWrapper = styled(Dropdown)`
 //   margin-left: 10px;
 // `
 
+@statusBar
 class Dashboard extends React.Component {
   renderHeader = () => (
     <DropdownWrapper icon="dots-three-vertical" />

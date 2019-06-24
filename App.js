@@ -1,6 +1,5 @@
 import { AppLoading } from 'expo';
 import * as Font from 'expo-font';
-import Constants from 'expo-constants'
 import React, { useState } from 'react';
 import { PortalProvider } from 'react-native-portal'
 import { LinearGradient } from 'expo-linear-gradient'
@@ -57,10 +56,7 @@ export default function App({ skipLoadingScreen }) {
 
   return (
     <LinearGradient
-      style={{
-        flex: 1,
-        paddingTop: Constants.statusBarHeight,
-      }}
+      style={{ flex: 1 }}
       colors={['#99D815', '#49C0DC']}
       start={[0, 0]}
       end={[1, 1]}

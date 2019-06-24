@@ -19,6 +19,8 @@ export function mainReducer(state = initialState, action) {
       }
       return { ...state, sum: parseFloat(sum.join('.')) };
     }
+    case type.MAIN_SET_SUM:
+      return { ...state, sum: action.payload };
     case type.MAIN_OPEN_QR:
       return { ...state, openQR: action.payload };
     case type.MAIN_CHANGE_FLOAT:

@@ -4,7 +4,7 @@ import { px } from 'core/utils'
 import { SafeAreaView, StatusBar } from 'react-native'
 import styled from 'styled-components'
 
-import { Input, Button } from 'atoms'
+import * as atoms from 'atoms'
 import { Header } from 'molucules'
 
 
@@ -22,6 +22,13 @@ const TitleWrapper = styled.Text`
 `
 const InputWrapper = styled.View`
   padding: ${px(20)};
+`
+const ButtonWrapper = styled.View`
+  padding: ${px(20)};
+  align-items: center;
+`
+const Button = styled(atoms.Button)`
+  width: ${px(250)};
 `
 
 class BindTerminal extends React.Component {
@@ -41,14 +48,14 @@ class BindTerminal extends React.Component {
 
   renderInput = () => (
     <InputWrapper>
-      <Input label="ID терминала" />
+      <atoms.Input label="ID терминала" />
     </InputWrapper>
   )
 
   renderButton = () => (
-    <InputWrapper>
+    <ButtonWrapper>
       <Button>Привязать</Button>
-    </InputWrapper>
+    </ButtonWrapper>
   )
 
   render() {

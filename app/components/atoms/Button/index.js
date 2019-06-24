@@ -18,8 +18,8 @@ const WrapperText = styled.Text`
   font-family: roboto;
 `
 
-const Button = ({ children }) => (
-  <Wrapper>
+const Button = ({ children, style }) => (
+  <Wrapper style={style}>
     <WrapperGradient
       colors={['#99D815', '#49C0DC']}
       start={[0, 0]}
