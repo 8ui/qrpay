@@ -5,7 +5,6 @@ import { Dimensions } from 'react-native'
 import { Entypo } from '@expo/vector-icons';
 import { View } from 'react-native-animatable'
 import styled from 'styled-components'
-import { BlackPortal } from 'react-native-portal';
 
 import { Divider } from 'atoms'
 
